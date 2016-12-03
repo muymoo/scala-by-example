@@ -1,19 +1,17 @@
 package org.matt.example
 
 object SquareRoot {
-  def sqrt(i: Double): Double = {
+  def sqrt(x: Double): Double = fixedPoint(y => (y + x / y) / 2)(1.0)
 
-    def sqrtIter(guess: Double): Double =
-      if (isGoodEnough(guess)) guess
-      else sqrtIter(improve(guess))
+  def isCloseEnough(x: Double, y: Double): Boolean = Simple.abs((x - y) / x) < Math.ulp(x)
 
-    def isGoodEnough(guess: Double) =
-      Simple.abs(Simple.square(guess) - i) <= math.ulp(i)
+  def fixedPoint(f: Double => Double)(firstGuess: Double): Double = {
+    def iterate(guess: Double): Double = {
+      val next = f(guess)
+      if (isCloseEnough(guess, next)) next
+      else iterate(next)
+    }
 
-    def improve(guess: Double) =
-      (guess + i / guess) / 2
-
-    sqrtIter(1.0)
+    iterate(firstGuess)
   }
-
 }

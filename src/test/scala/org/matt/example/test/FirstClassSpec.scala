@@ -18,5 +18,7 @@ class FirstClassSpec extends UnitSpec {
   it should "compute the produce of values of functions between a range" in {
     FirstClass.productInts(2,4) should be (24)
   }
+
+
 }
 
